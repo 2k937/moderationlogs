@@ -3,83 +3,192 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Moderation Bot Download</title>
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-<style>
-  * { margin:0; padding:0; box-sizing:border-box; font-family: 'Roboto', sans-serif; }
-  body { background: #1e1e2f; color: #fff; display: flex; justify-content: center; align-items: center; height: 100vh; flex-direction: column; }
-  h1 { font-size: 2.5rem; margin-bottom: 20px; color: #00ffff; text-shadow: 0 0 10px #00ffff; text-align: center; }
-  
-  .download-container { position: relative; display: flex; flex-direction: column; align-items: center; }
-  
-  .download-btn { 
-    background: linear-gradient(90deg, #00ffff, #ff00ff);
-    padding: 20px 40px;
-    border: none;
-    border-radius: 15px;
-    font-size: 1.5rem;
-    color: #fff;
-    cursor: pointer;
-    overflow: hidden;
-    transition: 0.4s;
-    position: relative;
-    z-index: 1;
-  }
-  .download-btn:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 20px #00ffff, 0 0 40px #ff00ff;
-  }
-  
-  .progress-bar {
-    width: 0;
-    height: 10px;
-    border-radius: 10px;
-    background: linear-gradient(90deg, #00ffff, #ff00ff);
-    margin-top: 20px;
-    transition: width 0.4s ease;
-  }
+<title>Moderation Bot</title>
 
-  .animation { margin-top: 40px; width: 100px; height: 100px; border: 10px solid #00ffff; border-top: 10px solid #ff00ff; border-radius: 50%; animation: spin 1.5s linear infinite; }
-  @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-  
-  p { margin-top: 20px; color: #aaa; text-align: center; max-width: 400px; }
-  canvas { position: fixed; top: 0; left: 0; pointer-events: none; }
+<!-- Fonts -->
+<style>
+@font-face {
+  font-family: GeistMono;
+  src: url('https://cdn.jsdelivr.net/gh/yourcdn/GeistMono.woff2') format("woff2");
+  font-display: swap;
+  font-weight: 100 900;
+}
+@font-face {
+  font-family: GeistSans;
+  src: url('https://cdn.jsdelivr.net/gh/yourcdn/GeistSans.woff2') format("woff2");
+  font-display: swap;
+  font-weight: 100 900;
+}
+
+body {
+  font-family: GeistSans, "Segoe UI", Roboto, sans-serif;
+  background: #12121c;
+  color: #ffffff;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  scroll-behavior: smooth;
+}
+
+h1 {
+  font-family: GeistSans, sans-serif;
+  font-size: 3rem;
+  margin: 40px 0 20px;
+  color: #00ffff;
+  text-align: center;
+  text-shadow: 0 0 12px #00ffff;
+}
+
+.download-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 50px;
+}
+
+.download-btn, .npm-btn {
+  font-family: GeistSans, sans-serif;
+  background: linear-gradient(90deg, #00ffff, #ff00ff);
+  padding: 18px 40px;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.download-btn:hover, .npm-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px #00ffff, 0 0 40px #ff00ff;
+}
+
+.progress-bar {
+  width: 0;
+  height: 8px;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #00ffff, #ff00ff);
+  transition: width 0.4s ease;
+}
+
+.animation {
+  margin-top: 40px;
+  width: 80px;
+  height: 80px;
+  border: 8px solid #00ffff;
+  border-top: 8px solid #ff00ff;
+  border-radius: 50%;
+  animation: spin 1.5s linear infinite;
+}
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+.commands {
+  max-width: 800px;
+  margin-top: 50px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  padding: 0 20px;
+}
+
+.command {
+  background: #1c1c2a;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0,255,255,0.2);
+  font-family: GeistMono, monospace;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.command:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 20px rgba(0,255,255,0.5);
+}
+
+p {
+  text-align: center;
+  color: #aaa;
+  max-width: 500px;
+  margin-top: 20px;
+}
+
+/* Discord Status */
+.discord-status-container {
+  width: 90%;
+  max-width: 900px;
+  margin: 60px 0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0,255,255,0.2);
+}
+
+.discord-status-container h2 {
+  text-align: center;
+  color: #7289da;
+  margin-bottom: 20px;
+}
+.discord-status-container iframe {
+  width: 100%;
+  height: 500px;
+  border: none;
+}
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 10;
+}
 </style>
 </head>
 <body>
 
-<h1>Download Moderation Bot</h1>
+<h1>Moderation Bot</h1>
 
 <div class="download-container">
-  <button id="downloadBtn" class="download-btn">Download Now</button>
+  <button id="downloadBtn" class="download-btn">Download ZIP from GitHub</button>
+  <button class="npm-btn" onclick="copyNpm()">Copy npm Install</button>
   <div class="progress-bar" id="progressBar"></div>
 </div>
 
 <div class="animation"></div>
 
-<p>This is the latest version of the Moderation Bot. Click the button to download the ZIP file from GitHub.</p>
+<p>Click the button to download the latest version or copy the npm install command to use it in your project.</p>
+
+<div class="commands">
+  <div class="command"><strong>/ban</strong><br>Ban a user from the server</div>
+  <div class="command"><strong>/kick</strong><br>Kick a user from the server</div>
+  <div class="command"><strong>/warn</strong><br>Warn a user and log it</div>
+  <div class="command"><strong>/purge</strong><br>Delete messages in a channel</div>
+  <div class="command"><strong>/timeout</strong><br>Temporarily mute a user</div>
+</div>
+
+<!-- Discord Status Section -->
+<div class="discord-status-container">
+  <h2>Discord Status</h2>
+  <iframe src="https://discordstatus.com/" title="Discord Status"></iframe>
+</div>
 
 <canvas id="confetti"></canvas>
 
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 <script>
+// Download Button Logic
 const btn = document.getElementById("downloadBtn");
 const bar = document.getElementById("progressBar");
 const downloadUrl = "https://github.com/2k937/moderation-bot-open-source-/archive/refs/heads/main.zip";
 
 btn.addEventListener("click", () => {
-  // Reset progress
   bar.style.width = "0%";
-
   let progress = 0;
   const interval = setInterval(() => {
-    progress += Math.random() * 10; // Simulate progress
+    progress += Math.random() * 10;
     if (progress >= 100) progress = 100;
     bar.style.width = progress + "%";
     if (progress === 100) {
       clearInterval(interval);
       launchConfetti();
-      // Trigger download
       const link = document.createElement('a');
       link.href = downloadUrl;
       link.download = 'moderation-bot.zip';
@@ -88,13 +197,21 @@ btn.addEventListener("click", () => {
   }, 200);
 });
 
-// Confetti effect
+// Confetti
 function launchConfetti() {
   confetti({
     particleCount: 150,
     spread: 70,
     origin: { y: 0.6 },
     colors: ['#00ffff','#ff00ff','#ffffff']
+  });
+}
+
+// NPM Copy
+function copyNpm() {
+  const text = "npm i moderation-bot-open-source";
+  navigator.clipboard.writeText(text).then(() => {
+    alert("npm install command copied to clipboard!");
   });
 }
 </script>
