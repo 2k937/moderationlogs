@@ -4,125 +4,131 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Moderation Bot</title>
-
-<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 <style>
-@font-face {
-  font-family: GeistMono;
-  src: url('https://cdn.jsdelivr.net/gh/yourcdn/GeistMono.woff2') format("woff2");
-  font-display: swap;
-  font-weight: 100 900;
-}
-@font-face {
-  font-family: GeistSans;
-  src: url('https://cdn.jsdelivr.net/gh/yourcdn/GeistSans.woff2') format("woff2");
-  font-display: swap;
-  font-weight: 100 900;
-}
-
 body {
-  font-family: GeistSans, "Segoe UI", Roboto, sans-serif;
-  background: #12121c;
+  font-family: 'Roboto', sans-serif;
+  background-color: #0f0f17;
   color: #ffffff;
   margin: 0;
   padding: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-height: 100vh;
   scroll-behavior: smooth;
 }
 
-h1 {
-  font-family: GeistSans, sans-serif;
-  font-size: 3rem;
-  margin: 40px 0 20px;
+header {
+  width: 100%;
+  padding: 30px 0;
+  background: #0b0b12;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.5);
+}
+
+header h1 {
+  margin: 0;
   color: #00ffff;
-  text-align: center;
+  font-size: 2.8rem;
   text-shadow: 0 0 12px #00ffff;
+}
+
+.npm-install {
+  margin-top: 15px;
+  background-color: #1e1e2f;
+  color: #ffffff;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-family: monospace;
+  font-size: 1rem;
+  box-shadow: 0 0 12px rgba(0,255,255,0.4);
+}
+
+.container {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 0 20px;
 }
 
 .download-container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-wrap: wrap;
   gap: 15px;
+  justify-content: center;
   margin-bottom: 50px;
 }
 
 .download-btn, .npm-btn {
-  font-family: GeistSans, sans-serif;
-  background: linear-gradient(90deg, #00ffff, #ff00ff);
-  padding: 18px 40px;
+  background: linear-gradient(90deg,#00ffff,#ff00ff);
   border: none;
   border-radius: 12px;
-  font-size: 1.2rem;
+  padding: 16px 36px;
+  font-size: 1rem;
+  color: #fff;
   cursor: pointer;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 .download-btn:hover, .npm-btn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 20px #00ffff, 0 0 40px #ff00ff;
+  transform: scale(1.08);
+  box-shadow: 0 0 20px #00ffff,0 0 40px #ff00ff;
 }
 
 .progress-bar {
   width: 0;
-  height: 8px;
-  border-radius: 8px;
-  background: linear-gradient(90deg, #00ffff, #ff00ff);
-  transition: width 0.4s ease;
+  height: 6px;
+  border-radius: 6px;
+  background: linear-gradient(90deg,#00ffff,#ff00ff);
+  transition: width 0.3s ease;
+  margin-top: 10px;
 }
 
-.animation {
-  margin-top: 40px;
-  width: 80px;
-  height: 80px;
-  border: 8px solid #00ffff;
-  border-top: 8px solid #ff00ff;
-  border-radius: 50%;
-  animation: spin 1.5s linear infinite;
+.category {
+  margin-bottom: 50px;
 }
-@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+.category h2 {
+  color: #00ffff;
+  font-size: 1.8rem;
+  border-bottom: 2px solid #00ffff;
+  padding-bottom: 6px;
+  margin-bottom: 20px;
+  transition: 0.3s;
+}
+.category h2:hover {
+  color: #ff00ff;
+  border-color: #ff00ff;
+}
 
 .commands {
-  max-width: 800px;
-  margin-top: 50px;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 20px;
-  padding: 0 20px;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 22px;
 }
 
 .command {
-  background: #1c1c2a;
+  background: linear-gradient(145deg, #1e1e2f, #222236);
   padding: 20px;
   border-radius: 12px;
-  box-shadow: 0 0 15px rgba(0,255,255,0.2);
-  font-family: GeistMono, monospace;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: center;
+  font-family: monospace;
+  font-weight: bold;
+  color: #ffffff;
+  box-shadow: 0 0 12px rgba(0,255,255,0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
 }
 .command:hover {
   transform: translateY(-5px);
-  box-shadow: 0 0 20px rgba(0,255,255,0.5);
+  box-shadow: 0 0 20px #00ffff, 0 0 40px #ff00ff;
+  background: linear-gradient(145deg, #00ffff, #ff00ff);
+  color: #000;
 }
 
-p {
-  text-align: center;
-  color: #aaa;
-  max-width: 500px;
-  margin-top: 20px;
-}
-
-/* Discord Status */
 .discord-status-container {
-  width: 90%;
-  max-width: 900px;
+  width: 100%;
   margin: 60px 0;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 0 20px rgba(0,255,255,0.2);
+  box-shadow: 0 0 25px rgba(0,255,255,0.2);
 }
-
 .discord-status-container h2 {
   text-align: center;
   color: #7289da;
@@ -130,9 +136,10 @@ p {
 }
 .discord-status-container iframe {
   width: 100%;
-  height: 500px;
+  height: 400px;
   border: none;
 }
+
 canvas {
   position: fixed;
   top: 0;
@@ -144,77 +151,102 @@ canvas {
 </head>
 <body>
 
-<h1>Moderation Bot</h1>
+<header>
+  <h1>Moderation Bot</h1>
+  <div class="npm-install">npm i moderation-bot-open-source</div>
+</header>
 
-<div class="download-container">
-  <button id="downloadBtn" class="download-btn">Download ZIP from GitHub</button>
-  <button class="npm-btn" onclick="copyNpm()">Copy npm Install</button>
-  <div class="progress-bar" id="progressBar"></div>
+<div class="container">
+
+  <div class="download-container">
+    <button id="downloadBtn" class="download-btn">Download ZIP from GitHub</button>
+    <button class="npm-btn" onclick="copyNpm()">Copy npm Install</button>
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+
+  <!-- Moderation Commands -->
+  <div class="category">
+    <h2>Moderation</h2>
+    <div class="commands">
+      <div class="command">M!ban</div>
+      <div class="command">M!kick</div>
+      <div class="command">M!warn</div>
+      <div class="command">M!purge</div>
+      <div class="command">M!timeout</div>
+      <div class="command">M!lock</div>
+      <div class="command">M!unlock</div>
+    </div>
+  </div>
+
+  <!-- Roles Commands -->
+  <div class="category">
+    <h2>Roles</h2>
+    <div class="commands">
+      <div class="command">M!role a</div>
+      <div class="command">M!role r</div>
+    </div>
+  </div>
+
+  <!-- Setup & Automod Commands -->
+  <div class="category">
+    <h2>Setup & Automod</h2>
+    <div class="commands">
+      <div class="command">M!setup</div>
+      <div class="command">M!automod</div>
+    </div>
+  </div>
+
+  <!-- Discord Status -->
+  <div class="discord-status-container">
+    <h2>Discord Status</h2>
+    <iframe src="https://discordstatus.com/" title="Discord Status"></iframe>
+  </div>
 </div>
 
-<div class="animation"></div>
-
-<p>Click the button to download the latest version or copy the npm install command to use it in your project.</p>
-
-<div class="commands">
-  <div class="command"><strong>/ban</strong><br>Ban a user from the server</div>
-  <div class="command"><strong>/kick</strong><br>Kick a user from the server</div>
-  <div class="command"><strong>/warn</strong><br>Warn a user and log it</div>
-  <div class="command"><strong>/purge</strong><br>Delete messages in a channel</div>
-  <div class="command"><strong>/timeout</strong><br>Temporarily mute a user</div>
-</div>
-
-<!-- Discord Status Section -->
-<div class="discord-status-container">
-  <h2>Discord Status</h2>
-  <iframe src="https://discordstatus.com/" title="Discord Status"></iframe>
-</div>
-
-<canvas id="confetti"></canvas>
+<audio id="clickSound" src="https://freesound.org/data/previews/256/256113_3263906-lq.mp3"></audio>
 
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 <script>
-// Download Button Logic
-const btn = document.getElementById("downloadBtn");
+// Click sound
+const clickSound = document.getElementById("clickSound");
+document.querySelectorAll('button').forEach(btn => {
+  btn.addEventListener('click', ()=> {
+    clickSound.currentTime = 0;
+    clickSound.play();
+  });
+});
+
+// Download button logic
+const downloadBtn = document.getElementById("downloadBtn");
 const bar = document.getElementById("progressBar");
 const downloadUrl = "https://github.com/2k937/moderation-bot-open-source-/archive/refs/heads/main.zip";
 
-btn.addEventListener("click", () => {
+downloadBtn.addEventListener("click", () => {
   bar.style.width = "0%";
   let progress = 0;
   const interval = setInterval(() => {
-    progress += Math.random() * 10;
-    if (progress >= 100) progress = 100;
+    progress += Math.random()*10;
+    if(progress >= 100) progress = 100;
     bar.style.width = progress + "%";
-    if (progress === 100) {
+    if(progress===100){
       clearInterval(interval);
-      launchConfetti();
+      confetti({particleCount:150, spread:70, origin:{y:0.6}, colors:['#00ffff','#ff00ff','#ffffff']});
       const link = document.createElement('a');
       link.href = downloadUrl;
       link.download = 'moderation-bot.zip';
       link.click();
     }
-  }, 200);
+  },200);
 });
 
-// Confetti
-function launchConfetti() {
-  confetti({
-    particleCount: 150,
-    spread: 70,
-    origin: { y: 0.6 },
-    colors: ['#00ffff','#ff00ff','#ffffff']
-  });
-}
-
 // NPM Copy
-function copyNpm() {
-  const text = "npm i moderation-bot-open-source";
-  navigator.clipboard.writeText(text).then(() => {
-    alert("npm install command copied to clipboard!");
-  });
+function copyNpm(){
+  navigator.clipboard.writeText("npm i moderation-bot-open-source").then(()=>{alert("npm install command copied!");});
 }
 </script>
+
+</body>
+</html>
 
 </body>
 </html>
